@@ -1,8 +1,7 @@
 //selector
 const gridContainer = document.querySelector(".grid-container")
 
-
-//create GRID   
+//create GRID
 const createGrid = (size) => {
     for (let i=0; i<size; i++) {
         for (let j=0; j<size; j++) {
@@ -11,28 +10,30 @@ const createGrid = (size) => {
             element.setAttribute("class", "grid-unit")
             element.setAttribute("id", id)
             gridContainer.appendChild(element)
-            console.log("hi")
         }
     }
+    markUp()
+}
+createGrid(16);
+
+//grid unit event listeners
+
+function markUp() {
+    const gridUnits = [...document.querySelectorAll("div.grid-unit")]
+    gridUnits.forEach(unit => unit.addEventListener('mouseover', fill))
+    console.log(gridUnits)
 }
 
-const fill = (e) => {
+//paint units
+function fill(e){
     const unit = e.target;
     unit.style.backgroundColor = "grey"        
 }
 
-const gridUnits = [...document.querySelectorAll(".grid-unit")];
-console.log(gridUnits)
-gridUnits.forEach(unit => unit.addEventListener('mouseover', fill))
-
-createGrid(16);
-
+//reset grid
 const reset = () => {
-    gridUnits.forEach(unit => unit.style.backgroundColor= "");
-    let answer = prompt("How many squares?")
-    console.log(answer);
-    newSize = parseInt(answer)
-    createGrid(newSize);
+    [...document.querySelectorAll("div.grid-unit")].forEach(unit => unit.style.backgroundColor = "");
+    const size = prompt("What size? (N^2)")
+    gridContainer.innerHTML = "";
+    createGrid(size);
 }
-
-
