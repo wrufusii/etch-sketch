@@ -3,6 +3,8 @@ const gridContainer = document.querySelector(".grid-container")
 
 //create GRID
 const createGrid = (size) => {
+    gridContainer.style.gridTemplateColumns = `repeat(${size},1fr)`
+    gridContainer.style.gridTemplateRows = `repeat(${size},1fr)`
     for (let i=0; i<size; i++) {
         for (let j=0; j<size; j++) {
             let id = `${i+1}-${j+1}`
@@ -27,7 +29,16 @@ function markUp() {
 //paint units
 function fill(e){
     const unit = e.target;
-    unit.style.backgroundColor = "grey"        
+    const bgColor = window.getComputedStyle(unit).backgroundColor;
+    console.log(bgColor)
+    let opacity = parseFloat(bgColor.split(',')[3].slice(0, -1));
+    console.log(opacity);
+
+    if (opacity < 1) {
+        opacity += 0.15
+    }
+    unit.style.backgroundColor = `rgb(128, 128, 128, ${opacity})`;
+   
 }
 
 //reset grid
